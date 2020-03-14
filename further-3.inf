@@ -1,0 +1,133 @@
+!% -SD
+
+!===================================================================================
+Constant  Story	"Further Adventures";
+Constant	Headline
+            "^^These adventures were not covered in the original Hitchhikers 
+            Guide to the Galaxy. They took place after the Earth's 
+            destruction by the Vogan death ships.^^";
+
+Release 0;	Serial "200306";		! Initial development - jlg - 03/06/2020
+
+Include "Parser";
+
+Include "VerbLib";
+
+!===================================================================================
+! Object classes
+
+Class	hh2g
+	with	name 'hitchhiker' 'hitchhiker^s' 'guide' 'hitchiker' 'hitchhiker^s',
+				description
+					"This edition is too large to carry around. It is available though, 
+					for reading.",
+				article "a",
+	has		static proper;
+	
+Class	aguide
+	with 	name 'accelerator' 'aguide' 'manual' 'tech' 'book',
+				description
+					"The technical manual for the particle accelerator. As with the
+					Hitchhiker's Guide, it is too big to carry around. An e version
+					is available at the control center and at all of the information
+					kiosks that you will find throughout the accelerator facility.",
+				article "a"
+	has		static proper;
+
+! Note: there will need to be a different version the guides at each location
+! Make it fixed in place and only readable in each location?
+! Name each specific guide based on its location, ie. hg2g_lobby ?
+
+Class		Room
+	with	description "UNDER CONSTRUCTION",
+	has		light;
+
+!===================================================================================
+! The game objects
+
+!------------------------------------------------------------------------------------
+
+Object	lobby	"Entry lobby"
+	with	description
+					"Just out of the elevator, you are twenty levels below the surface."
+	has		static light;
+
+!------------------------------------------------------------------------------------
+
+hh2g ->	hg2g_lobby	"Hitchhiker's Guide";
+
+!------------------------------------------------------------------------------------
+
+Object elevator	"elevator" lobby
+	with	name 'elevator' 'lift',
+				description
+					"The main passenger elevator that goes to the maintenance levels
+					below, the levels above and to the surface. Push the 
+					Elevator call button to call the elevator for use."
+	has		static;
+					
+Object	call_button "elevator call button" lobby
+	with	name 'call' 'button',
+				description
+					"Push this button to call the elator."
+	has		static;
+	
+Object	elevator_placard "elevator placard" lobby
+	with	name 'placard' 'sign' 'warning',
+				description
+					"In case of fire, the elevator is out of service. Use the stairs.",
+	has		static;
+
+!------------------------------------------------------------------------------------
+
+Room		lounge "employee lounge";
+
+!------------------------------------------------------------------------------------
+
+Room		locker_room "locker room";
+
+!------------------------------------------------------------------------------------
+
+Room		control_room "control room";
+
+!------------------------------------------------------------------------------------
+
+Object	-> claxon	"warning claxon";
+
+Aguide -> aguide_control "accelerator tech manual";
+
+!------------------------------------------------------------------------------------
+
+Object	-> warning_screen "warning screen";
+
+!------------------------------------------------------------------------------------
+
+Object	secure_door	"security door";
+
+!------------------------------------------------------------------------------------
+
+Room		particle_accel "particle accelerator";
+
+!------------------------------------------------------------------------------------
+
+!====================================================================================
+! Player Possessions
+
+!------------------------------------------------------------------------------------
+
+Object	badge "security badge";
+
+!------------------------------------------------------------------------------------
+
+!===================================================================================
+! Entry point routines
+
+[ Initialise; location = lobby; 
+				move badge to player;
+];
+
+!===================================================================================
+! Standard and extended grammar
+
+Include "Grammar";
+
